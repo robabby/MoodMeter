@@ -1,7 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation';
+// Provider is the root tag then hosts the state for the entire application
+import { Provider } from 'react-redux';
 
+import store from './store';
 import AuthScreen from './screens/AuthScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
 import MapScreen from './screens/MapScreen';
@@ -12,6 +15,7 @@ import ReviewScreen from  './screens/ReviewScreen';
 export default class App extends React.Component {
   render() {
     const MainNavigator = TabNavigator({
+      // Route config object
       welcome: { screen: WelcomeScreen },
       auth: { screen: AuthScreen },
       main: {
@@ -26,10 +30,20 @@ export default class App extends React.Component {
           }
         })
       }
+    }, {
+      // Config options for initial Navigator
+      navigationOptions: {
+        tabBarVisible: false
+      },
+      lazy: true
     });
 
     return (
-      <MainNavigator />
+      // Every component now has access to the store using the
+      // Connect helper from react-redux library
+      <Provider store={store}>
+        <MainNavigator />
+      </Provider>
     );
   }
 }
