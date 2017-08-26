@@ -65,7 +65,7 @@ class DeckScreen extends Component {
 const styles = {
   detailWrapper: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     marginBottom: 10
   }
 }
