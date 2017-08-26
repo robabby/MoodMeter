@@ -20,7 +20,7 @@ class WelcomeScreen extends Component {
         this.props.navigation.navigate('map');
         this.setState({ token });
     } else {
-      this.state({ token: false });
+      this.setState({ token: false });
     }
   }
 
