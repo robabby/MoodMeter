@@ -28,6 +28,12 @@ export default class App extends React.Component {
               settings: { screen: SettingsScreen }
             })
           }
+        }, {
+          tabBarPosition: 'bottom',
+          // swipeEnabled: false  // Android specific functionality we could turn off
+          tabBarOptions: {
+            labelStyle: { fontSize: 12 }
+          }
         })
       }
     }, {

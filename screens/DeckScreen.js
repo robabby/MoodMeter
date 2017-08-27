@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Platform } from 'react-native';
 // Hooking up to the redux store to gain access to the state props
 import { connect } from 'react-redux';
 import { MapView } from 'expo';
-import { Card, Button } from 'react-native-elements';
+import { Card, Button, Icon } from 'react-native-elements';
 import Swipe from '../components/Swipe';
 
 import * as actions from '../actions';
 
 class DeckScreen extends Component {
+  static navigationOptions = {
+    title: 'Jobs',
+    tabBarIcon: ({ tintColor }) => {
+        return <Icon name="description" size={30} color={tintColor} />
+    }
+  }
+
   renderCard(job) {
-    console.log("/job.latitude/ is: ", job.latitude);
     const initialRegion = {
       longitude: job.longitude,
       latitude: job.latitude,
@@ -24,7 +30,7 @@ class DeckScreen extends Component {
           <MapView
             scrollEnabled={false}
             style={{ flex: 1 }}
-            cacheEnabled={true}
+            cacheEnabled={Platform.OS === 'android'}
             initialRegion={initialRegion}
           >
           </MapView>
@@ -40,15 +46,23 @@ class DeckScreen extends Component {
     );
   }
 
-  renderNoMoreCards() {
+  renderNoMoreCards = () => {
     return (
-      <Card title="No more jobs"></Card>
+      <Card title="No More Jobs">
+        <Button
+          title="Back To Map"
+          large
+          icon={{ name: 'my-location' }}
+          backgroundColor="#03A9F4"
+          onPress={() => this.props.navigation.navigate('map')}
+        />
+      </Card>
     )
   }
 
   render() {
     return (
-      <View style={{ marginTop: 10 }}>
+      <View style={{ marginTop: 20 }}>
         <Swipe
           data={this.props.jobs}
           renderCard={this.renderCard}
