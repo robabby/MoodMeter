@@ -17,7 +17,7 @@ class AuthScreen extends Component {
 
   onAuthComplete(props) {
     if (props.token) {
-      this.props.navigation.navigate('map');
+      this.props.navigation.navigate('home');
     }
   }
 

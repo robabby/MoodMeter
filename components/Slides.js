@@ -50,6 +50,8 @@ const styles = {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingLeft: 10,
+    paddingRight: 10,
     width: SCREEN_WIDTH
   },
   textStyle: {

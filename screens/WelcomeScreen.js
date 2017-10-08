@@ -5,9 +5,9 @@ import { AppLoading } from 'expo';
 import Slides from '../components/Slides';
 
 const SLIDE_DATA = [
-  { text: 'Welcome to JobApp', color: '#03a9f4' },
-  { text: 'Use this to get a job', color: '#009688' },
-  { text: 'Set your location, then swipe away', color: '#03a9f4' }
+  { text: 'Welcome to MoodMeter', color: '#03a9f4' },
+  { text: 'Capture your moods', color: '#009688' },
+  { text: 'Gain self awareness', color: '#03a9f4' }
 ];
 
 class WelcomeScreen extends Component {
@@ -18,7 +18,7 @@ class WelcomeScreen extends Component {
 
     if (token) {
       this.setState({ token });
-      this.props.navigation.navigate('map');
+      this.props.navigation.navigate('home');
     } else {
       this.setState({ token: false });
     }

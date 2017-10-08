@@ -9,6 +9,7 @@ import registerForNotifications from './services/push_notifications';
 import store from './store';
 import AuthScreen from './screens/AuthScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
+import HomeScreen from './screens/HomeScreen';
 import MapScreen from './screens/MapScreen';
 import DeckScreen from './screens/DeckScreen';
 import SettingsScreen from './screens/SettingsScreen';
@@ -33,6 +34,7 @@ export default class App extends React.Component {
       auth: { screen: AuthScreen },
       main: {
         screen: TabNavigator({
+          home: { screen: HomeScreen },
           map: { screen: MapScreen },
           deck: { screen: DeckScreen },
           review: {
