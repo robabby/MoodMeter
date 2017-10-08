@@ -15,6 +15,7 @@ import MapScreen from './screens/MapScreen';
 import DeckScreen from './screens/DeckScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import ReviewScreen from  './screens/ReviewScreen';
+import CameraScreen from  './screens/CameraScreen';
 
 export default class App extends React.Component {
   componentDidMount() {
@@ -34,6 +35,7 @@ export default class App extends React.Component {
       welcome: { screen: WelcomeScreen },
       auth: { screen: AuthScreen },
       new: { screen: NewEntryScreen },
+      camera: { screen: CameraScreen },
       main: {
         screen: TabNavigator({
           home: { screen: HomeScreen },
