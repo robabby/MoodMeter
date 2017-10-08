@@ -29,7 +29,9 @@ class NewEntryScreen extends Component {
         this.setState({
           region: {
             latitude: position.coords.latitude,
+            latitudeDelta: 0.09,
             longitude: position.coords.longitude,
+            longitudeDelta: 0.04,
             error: null
           }
         });
