@@ -19,12 +19,6 @@ class Moods extends Component {
             iconStyle={[styles.buttonStyle, { backgroundColor: slide.color }]}
             onPress={this.props.onComplete}
           />
-          {/* <Button
-            iconRight
-            icon={{name: 'play-arrow'}}
-            buttonStyle={[styles.buttonStyle, { backgroundColor: slide.color }]}
-            onPress={this.props.onComplete}
-          /> */}
         </View>
       );
     });

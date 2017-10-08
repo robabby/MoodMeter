@@ -10,6 +10,7 @@ import store from './store';
 import AuthScreen from './screens/AuthScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
 import HomeScreen from './screens/HomeScreen';
+import NewEntryScreen from  './screens/NewEntryScreen';
 import MapScreen from './screens/MapScreen';
 import DeckScreen from './screens/DeckScreen';
 import SettingsScreen from './screens/SettingsScreen';
@@ -32,6 +33,7 @@ export default class App extends React.Component {
       // Route config object
       welcome: { screen: WelcomeScreen },
       auth: { screen: AuthScreen },
+      new: { screen: NewEntryScreen },
       main: {
         screen: TabNavigator({
           home: { screen: HomeScreen },

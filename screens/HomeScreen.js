@@ -58,15 +58,14 @@ class HomeScreen extends Component {
     }
   }
 
-  constructor(props) {
-    super(props)
-    // this.state = { mood: 18 }
+  onSelectMood = () => {
+    this.props.navigation.navigate('new');
   }
 
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <Moods data={SLIDE_DATA} onComplete={this.onSlidesComplete} />
+        <Moods data={SLIDE_DATA} onComplete={this.onSelectMood} />
       </View>
     );
   }
