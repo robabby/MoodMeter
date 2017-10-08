@@ -27,7 +27,6 @@ class Moods extends Component {
   render() {
     return (
       <ScrollView
-        pagingEnabled
         snapToAlignment='end'
         snapToInterval={1}
         decelerationRate="fast"
