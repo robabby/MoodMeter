@@ -4,7 +4,7 @@
     "description": "An application for keeping track of your moods",
     "slug": "MoodMeter",
     "privacy": "public",
-    "sdkVersion": "19.0.0",
+    "sdkVersion": "21.0.0",
     "version": "1.0.0",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
