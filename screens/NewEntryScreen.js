@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
 import { View, Text, Platform, ActivityIndicator } from 'react-native';
-import { Button, FormLabel, FormInput, Icon, Divider } from 'react-native-elements';
+import {
+  Button,
+  FormLabel,
+  FormInput,
+  Icon,
+  Divider,
+  Badge,
+  List,
+  ListItem
+} from 'react-native-elements';
 import { connect } from 'react-redux';
 import { MapView, Contacts } from 'expo';
 
@@ -79,7 +88,9 @@ class NewEntryScreen extends Component {
   }
 
   render() {
+    const { currentMood } = this.props;
     const { goBack } = this.props.navigation;
+
     if (!this.state.mapLoaded) {
       return (
         <View style={{ flex: 1, justifyContent: 'center' }}>
@@ -89,7 +100,7 @@ class NewEntryScreen extends Component {
     }
     return (
       <View>
-        <View style={{height: 200}}>
+        <View style={{height: 150}}>
           <MapView
             region={this.state.region}
             style={{ flex: 1 }}
@@ -97,14 +108,28 @@ class NewEntryScreen extends Component {
           />
         </View>
         <Divider style={{ height: 7, backgroundColor: '#00D2FF' }} />
-        <Button
-          onPress={this.showFirstContactAsync}
-          title="Contacts"
+        <Badge
+          value={currentMood.name}
+          containerStyle={[styles.moodBadgeContainerStyle, { backgroundColor: currentMood.color }]}
+          textStyle={styles.moodBadgeTextStyle}
         />
-        <Button
-          onPress={this.onGoBack}
-          title="Go Back"
-        />
+
+        <List containerStyle={{marginBottom: 20}}>
+          <ListItem
+            title="Add People"
+            leftIcon={{name: 'face'}}
+            onPress={this.showFirstContactAsync}
+          />
+          <ListItem
+            title="Add Photos"
+            leftIcon={{name: 'add-a-photo'}}
+          />
+          <ListItem
+            title="Add Links"
+            leftIcon={{name: 'attachment'}}
+          />
+        </List>
+
         <FormLabel>Notes</FormLabel>
         <FormInput
           style={styles.notesStyles}
@@ -112,6 +137,14 @@ class NewEntryScreen extends Component {
           numberOfLines={5}
           onChangeText={(text) => this.onNotesInput(text)}
           value={this.state.notes} />
+
+        <Button
+          title="Save"
+          icon={{name: 'done'}}
+          backgroundColor='#00D2FF'
+          style={styles.contactButtonStyles}
+          raised={true}
+        />
       </View>
     );
   }
@@ -120,6 +153,20 @@ class NewEntryScreen extends Component {
 const styles = {
   notesStyles: {
     marginBottom: 10
+  },
+  contactButtonStyles: {
+    marginTop:10
+  },
+  moodBadgeContainerStyle: {
+    marginTop: 5,
+    marginRight: 10,
+    marginBottom: 0,
+    marginLeft: 10
+  },
+  moodBadgeTextStyle: {
+    textShadowColor: 'rgba(0, 0, 0, .5)',
+    textShadowOffset: {width: 1, height: 1},
+    textShadowRadius: 3
   }
 }
 
