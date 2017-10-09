@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Platform } from 'react-native';
 import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
-import { MapView } from 'expo';
+import { MapView, Contacts } from 'expo';
 
 import { clearLikedJobs } from '../actions';
 
@@ -49,6 +49,26 @@ class NewEntryScreen extends Component {
     this.setState({ region });
   }
 
+  showFirstContactAsync = async () => {
+    // Ask for permission to query contacts.
+    const permission = await Expo.Permissions.askAsync(Expo.Permissions.CONTACTS);
+    if (permission.status !== 'granted') {
+      // Permission was denied...
+      return;
+    }
+    const contacts = await Expo.Contacts.getContactsAsync({
+      fields: [
+        Expo.Contacts.PHONE_NUMBERS,
+        Expo.Contacts.EMAILS,
+      ],
+      pageSize: 10,
+      pageOffset: 0,
+    });
+    if (contacts.total > 0) {
+      console.log(contacts);
+    }
+  }
+
   render() {
     return (
       <View>
@@ -60,12 +80,13 @@ class NewEntryScreen extends Component {
           />
         </View>
         <Button
+          onPress={this.showFirstContactAsync}
+          title="Contacts"
+        />
+        <Button
           onPress={this.onGoBack}
           title="Go Back"
         />
-        <Text>
-          New Entry Screen
-        </Text>
       </View>
     );
   }
