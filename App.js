@@ -33,10 +33,14 @@ export default class App extends React.Component {
       // Route config object
       welcome: { screen: WelcomeScreen },
       auth: { screen: AuthScreen },
-      new: { screen: NewEntryScreen },
       main: {
         screen: TabNavigator({
-          home: { screen: HomeScreen },
+          home: {
+            screen: StackNavigator({
+              home: { screen: HomeScreen },
+              new: { screen: NewEntryScreen }
+            })
+          },
           map: { screen: MapScreen },
           deck: { screen: DeckScreen },
           review: {
