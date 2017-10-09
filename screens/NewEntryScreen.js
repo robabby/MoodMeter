@@ -4,14 +4,15 @@ import { Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { MapView, Contacts } from 'expo';
 
-import { clearLikedJobs } from '../actions';
+import { setCurrentMood } from '../actions';
 
 class NewEntryScreen extends Component {
-  static navigationOptions = {
+  static navigationOptions = (props) => ({
+    title: 'Current Mood',
     headerStyle: {
-        marginTop: Platform.OS === 'android' ? 0 : 24
+        marginTop: Platform.OS === 'android' ? 24 : 0
     }
-  }
+  })
 
   state = {
     mapLoaded: false,
@@ -70,6 +71,7 @@ class NewEntryScreen extends Component {
   }
 
   render() {
+    console.log("/render/ NewEntryScreen: ", this.props);
     return (
       <View>
         <View style={{height: 200}}>
@@ -92,4 +94,8 @@ class NewEntryScreen extends Component {
   }
 }
 
-export default connect(null, { clearLikedJobs })(NewEntryScreen);
+function mapStateToProps({ moods }) {
+  return { currentMood: moods.currentMood };
+}
+
+export default connect(mapStateToProps, { setCurrentMood })(NewEntryScreen);

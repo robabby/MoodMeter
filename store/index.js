@@ -17,6 +17,6 @@ const store = createStore(
   )
 );
 
-persistStore(store, { storage: AsyncStorage, whitelist: ['likedJobs'] })
+persistStore(store, { storage: AsyncStorage, whitelist: ['moods'] })
 
 export default store;

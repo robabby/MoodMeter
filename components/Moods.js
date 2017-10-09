@@ -8,22 +8,29 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 class Moods extends Component {
 
+  setMood(mood) {
+    this.props.onComplete(mood)
+  }
+
   renderSlides() {
     const moodData = this.props.data;
 
-    return moodData.map((slide, index) => {
+    return moodData.map((mood, index) => {
       return (
-        <TouchableOpacity
-          key={slide.text}
-          onPress={this.props.onComplete}
-          style={ (index === 0) ? {marginTop: 24} : {} }
+        <View
+          key={mood.id}
         >
-          <LinearGradient style={styles.buttonStyle} colors={['#00D2FF', '#3A7BD5']}>
-            <Text style={styles.textStyle}>
-              {slide.text}
-            </Text>
-          </LinearGradient>
-        </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.setMood(mood)}
+            style={ (index === 0) ? {marginTop: 24} : {} }
+          >
+            <LinearGradient style={styles.buttonStyle} colors={['#00D2FF', '#3A7BD5']}>
+              <Text style={styles.textStyle}>
+                {mood.name}
+              </Text>
+            </LinearGradient>
+          </TouchableOpacity>
+        </View>
       );
     });
   }
