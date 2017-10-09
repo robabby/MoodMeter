@@ -9,7 +9,7 @@ import { clearLikedJobs } from '../actions';
 class NewEntryScreen extends Component {
   static navigationOptions = {
     headerStyle: {
-        marginTop: Platform.OS === 'android' ? 24 : 0
+        marginTop: Platform.OS === 'android' ? 0 : 24
     }
   }
 
