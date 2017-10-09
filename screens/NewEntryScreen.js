@@ -11,7 +11,8 @@ class NewEntryScreen extends Component {
     title: 'Current Mood',
     headerStyle: {
         marginTop: Platform.OS === 'android' ? 24 : 0
-    }
+    },
+    headerMode: 'float'
   })
 
   state = {
@@ -71,7 +72,7 @@ class NewEntryScreen extends Component {
   }
 
   render() {
-    console.log("/render/ NewEntryScreen: ", this.props);
+    const { goBack } = this.props.navigation;
     return (
       <View>
         <View style={{height: 200}}>

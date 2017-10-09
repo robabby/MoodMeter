@@ -29,18 +29,23 @@ export default class App extends React.Component {
     });
   }
   render() {
+
+
+    const mainUserFlow = StackNavigator({
+      home: { screen: HomeScreen },
+      new: { screen: NewEntryScreen }
+    }, {
+      initialRouteName: 'home',
+      headerMode: 'none'
+    });
+
     const MainNavigator = TabNavigator({
       // Route config object
       welcome: { screen: WelcomeScreen },
       auth: { screen: AuthScreen },
       main: {
         screen: TabNavigator({
-          home: {
-            screen: StackNavigator({
-              home: { screen: HomeScreen },
-              new: { screen: NewEntryScreen }
-            })
-          },
+          home: { screen: mainUserFlow },
           map: { screen: MapScreen },
           deck: { screen: DeckScreen },
           review: {
