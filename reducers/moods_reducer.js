@@ -10,7 +10,6 @@ export default function(state = [], action) {
     // case REHYDRATE:
     //   return action.payload.moodsHistory || [];
     case CURRENT_MOOD:
-      console.log("/CURRENT_MOOD/ reducer: ", action.payload);
       return { currentMood: action.payload };
     // case CLEAR_LIKED_JOBS:
     //   return [];
