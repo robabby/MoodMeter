@@ -1,7 +1,7 @@
 import { Notifications } from 'expo';
 import React from 'react';
 import { StyleSheet, Text, View, Alert } from 'react-native';
-import { TabNavigator, StackNavigator } from 'react-navigation';
+import { TabNavigator, StackNavigator, DrawerNavigator } from 'react-navigation';
 // Provider is the root tag then hosts the state for the entire application
 import { Provider } from 'react-redux';
 
@@ -31,7 +31,7 @@ export default class App extends React.Component {
   render() {
 
 
-    const mainUserFlow = StackNavigator({
+    const initialFlow = StackNavigator({
       home: { screen: HomeScreen },
       new: { screen: NewEntryScreen }
     }, {
@@ -44,8 +44,8 @@ export default class App extends React.Component {
       welcome: { screen: WelcomeScreen },
       auth: { screen: AuthScreen },
       main: {
-        screen: TabNavigator({
-          home: { screen: mainUserFlow },
+        screen: DrawerNavigator({
+          home: { screen: initialFlow },
           map: { screen: MapScreen },
           deck: { screen: DeckScreen },
           review: {
