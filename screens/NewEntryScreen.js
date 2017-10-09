@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Platform } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, FormLabel, FormInput } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { MapView, Contacts } from 'expo';
 
@@ -17,6 +17,7 @@ class NewEntryScreen extends Component {
 
   state = {
     mapLoaded: false,
+    notes: null,
     region: {
       longitude: -122,
       latitude: 37,
@@ -71,6 +72,11 @@ class NewEntryScreen extends Component {
     }
   }
 
+  onNotesInput = (text) => {
+    this.setState({ notes: text });
+    console.log(this.state);
+  }
+
   render() {
     const { goBack } = this.props.navigation;
     return (
@@ -90,8 +96,21 @@ class NewEntryScreen extends Component {
           onPress={this.onGoBack}
           title="Go Back"
         />
+        <FormLabel>Notes</FormLabel>
+        <FormInput
+          style={styles.notesStyles}
+          multiline={true}
+          numberOfLines={5}
+          onChangeText={(text) => this.onNotesInput(text)}
+          value={this.state.notes} />
       </View>
     );
+  }
+}
+
+const styles = {
+  notesStyles: {
+    paddingBottom: 10
   }
 }
 
