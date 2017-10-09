@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, Platform } from 'react-native';
-import { Button, FormLabel, FormInput } from 'react-native-elements';
+import { View, Text, Platform, ActivityIndicator } from 'react-native';
+import { Button, FormLabel, FormInput, Icon, Divider } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { MapView, Contacts } from 'expo';
 
@@ -8,11 +8,10 @@ import { setCurrentMood } from '../actions';
 
 class NewEntryScreen extends Component {
   static navigationOptions = (props) => ({
-    title: 'Current Mood',
-    headerStyle: {
-        marginTop: Platform.OS === 'android' ? 24 : 0
-    },
-    headerMode: 'float'
+    title: 'Home',
+    tabBarIcon: ({ tintColor }) => {
+        return <Icon name="home" size={30} color={tintColor} />
+    }
   })
 
   state = {
@@ -28,8 +27,8 @@ class NewEntryScreen extends Component {
 
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this.setState({
+      async (position) => {
+        await this.setState({
           region: {
             latitude: position.coords.latitude,
             latitudeDelta: 0.09,
@@ -42,6 +41,8 @@ class NewEntryScreen extends Component {
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
+
+    this.setState({ mapLoaded: true });
   }
 
   onGoBack = () => {
@@ -79,6 +80,13 @@ class NewEntryScreen extends Component {
 
   render() {
     const { goBack } = this.props.navigation;
+    if (!this.state.mapLoaded) {
+      return (
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <ActivityIndicator size="large" />
+        </View>
+      );
+    }
     return (
       <View>
         <View style={{height: 200}}>
@@ -88,6 +96,7 @@ class NewEntryScreen extends Component {
             onRegionChangeComplete={this.onRegionChangeComplete}
           />
         </View>
+        <Divider style={{ height: 7, backgroundColor: '#00D2FF' }} />
         <Button
           onPress={this.showFirstContactAsync}
           title="Contacts"
@@ -110,7 +119,7 @@ class NewEntryScreen extends Component {
 
 const styles = {
   notesStyles: {
-    paddingBottom: 10
+    marginBottom: 10
   }
 }
 
