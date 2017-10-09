@@ -42,7 +42,7 @@ class Moods extends Component {
         snapToInterval={1}
         decelerationRate="fast"
         showsVerticalScrollIndicator={false}
-        style={{flex:1, backgroundColor: '#333'}}
+        style={{flex:1}}
       >
         {this.renderSlides()}
       </ScrollView>
