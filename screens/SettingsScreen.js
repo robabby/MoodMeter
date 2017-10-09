@@ -7,7 +7,7 @@ import { clearLikedJobs } from '../actions';
 class SettingsScreen extends Component {
   static navigationOptions = {
     headerStyle: {
-        marginTop: Platform.OS === 'android' ? 0 : 24
+        marginTop: Platform.OS === 'android' ? 24 : 0
     }
   }
 
