@@ -2,14 +2,51 @@ import React, { Component } from 'react';
 import { View, Text, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import { LinearGradient } from 'expo';
+import Chroma from 'chroma-js';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
+const TOP_COLORS = ['#FFD53D', '#4B9FFF', '#1BD170', '#F26F92', '#FFB44C'];
+const BOTTOM_COLORS = ['#2D1408', '#131E4C', '#051326', '#062B11', '#350909'];
+const GRADIENT_COLOR_LENGTH = 600;
+const TOP_COLORS_SPECTRUM = Chroma.scale(TOP_COLORS).colors(GRADIENT_COLOR_LENGTH);
+const BOTTOM_COLORS_SPECTRUM = Chroma.scale(BOTTOM_COLORS).colors(GRADIENT_COLOR_LENGTH);
+const INTERVAL = 50;
 
 class Moods extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      topIndex: 0,
+      bottomIndex: 0,
+      colorTop: TOP_COLORS_SPECTRUM[0],
+      colorBottom: BOTTOM_COLORS_SPECTRUM[0]
+    };
+  }
 
   setMood(mood) {
     this.props.onComplete(mood)
+  }
+
+  onMoodScroll = (event) => {
+    let { topIndex, bottomIndex } = this.state
+
+    topIndex++
+    if (topIndex === TOP_COLORS_SPECTRUM.length) {
+      topIndex = 0
+    }
+
+    bottomIndex++
+    if (bottomIndex === BOTTOM_COLORS_SPECTRUM.length) {
+      bottomIndex = 0
+    }
+
+    this.setState({
+      topIndex: topIndex,
+      bottomIndex: bottomIndex,
+      colorTop: TOP_COLORS_SPECTRUM[topIndex],
+      colorBottom: BOTTOM_COLORS_SPECTRUM[bottomIndex]
+    })
   }
 
   renderSlides() {
@@ -22,13 +59,11 @@ class Moods extends Component {
         >
           <TouchableOpacity
             onPress={() => this.setMood(mood)}
-            style={ (index === 0) ? {marginTop: 24} : {} }
+            style={[styles.buttonStyle, (index === 0) ? {marginTop: 24} : {}] }
           >
-            <LinearGradient style={styles.buttonStyle} colors={['#00D2FF', '#3A7BD5']}>
-              <Text style={styles.textStyle}>
-                {mood.name}
-              </Text>
-            </LinearGradient>
+            <Text style={styles.textStyle}>
+              {mood.name}
+            </Text>
           </TouchableOpacity>
         </View>
       );
@@ -42,9 +77,15 @@ class Moods extends Component {
         snapToInterval={1}
         decelerationRate="fast"
         showsVerticalScrollIndicator={false}
-        style={{flex:1}}
+        style={styles.scrollViewStyle}
+        onScroll={this.onMoodScroll}
+        scrollEventThrottle={INTERVAL}
       >
-        {this.renderSlides()}
+        <LinearGradient
+          colors={[this.state.colorTop, this.state.colorBottom]}
+        >
+          {this.renderSlides()}
+        </LinearGradient>
       </ScrollView>
     );
   }
@@ -52,6 +93,10 @@ class Moods extends Component {
 
 const buttonMargin = 5;
 const styles = {
+  scrollViewStyle: {
+    flex: 1,
+    backgroundColor: '#fff'
+  },
   buttonStyle: {
     flex: 1,
     flexDirection: 'row',
@@ -66,10 +111,10 @@ const styles = {
     height: (SCREEN_HEIGHT - 54) / 8,
     opacity: 0.9,
     borderRadius: 5,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 5
+    // shadowColor: '#000',
+    // shadowOffset: { width: 0, height: 2 },
+    // shadowOpacity: 0.3,
+    // shadowRadius: 5
   },
   textStyle: {
     fontSize: 20,
