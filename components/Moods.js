@@ -6,8 +6,8 @@ import Chroma from 'chroma-js';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
-const TOP_COLORS = ['#EFFF3F', '#75CAFF', '#00FF77', '#FF6B6B', '#66FCFF'];
-const BOTTOM_COLORS = ['#190B04', '#090F26', '#030D1C', '#021408', '#1C0404'];
+const TOP_COLORS = ['#C33764', '#75CAFF', '#00FF77', '#FF6B6B', '#66FCFF'];
+const BOTTOM_COLORS = ['#1D2671', '#090F26', '#030D1C', '#021408', '#1C0404'];
 const GRADIENT_COLOR_LENGTH = 500;
 const TOP_COLORS_SPECTRUM = Chroma.scale(TOP_COLORS).colors(GRADIENT_COLOR_LENGTH);
 const BOTTOM_COLORS_SPECTRUM = Chroma.scale(BOTTOM_COLORS).colors(GRADIENT_COLOR_LENGTH);
