@@ -8,7 +8,7 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const TOP_COLORS = ['#EFFF3F', '#75CAFF', '#00FF77', '#FF6B6B', '#66FCFF'];
 const BOTTOM_COLORS = ['#190B04', '#090F26', '#030D1C', '#021408', '#1C0404'];
-const GRADIENT_COLOR_LENGTH = 700;
+const GRADIENT_COLOR_LENGTH = 500;
 const TOP_COLORS_SPECTRUM = Chroma.scale(TOP_COLORS).colors(GRADIENT_COLOR_LENGTH);
 const BOTTOM_COLORS_SPECTRUM = Chroma.scale(BOTTOM_COLORS).colors(GRADIENT_COLOR_LENGTH);
 const INTERVAL = 50;
@@ -59,7 +59,7 @@ class Moods extends Component {
         >
           <TouchableOpacity
             onPress={() => this.setMood(mood)}
-            style={[styles.buttonStyle, (index === 0) ? {marginTop: 24} : {}] }
+            style={[styles.buttonStyle, (index === 0) ? { marginTop: 24 } : {}] }
           >
             <Text style={styles.textStyle}>
               {mood.name}
@@ -95,7 +95,7 @@ const buttonMargin = 5;
 const styles = {
   scrollViewStyle: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: 'transparent'
   },
   buttonStyle: {
     flex: 1,
@@ -108,9 +108,8 @@ const styles = {
     marginRight: buttonMargin,
     marginBottom: buttonMargin * 2,
     width: SCREEN_WIDTH - (buttonMargin * 2),
-    height: (SCREEN_HEIGHT - 54) / 5,
-    opacity: 0.9,
-    borderRadius: 5,
+    height: (SCREEN_HEIGHT) / 5,
+    opacity: 1,
     // shadowColor: '#000',
     // shadowOffset: { width: 0, height: 2 },
     // shadowOpacity: 0.3,
@@ -121,7 +120,7 @@ const styles = {
     color: '#fff',
     backgroundColor: 'rgba(0, 0, 0, 0)',
     textShadowColor: 'rgba(0, 0, 0, .5)',
-    textShadowOffset: {width: 1, height: 1},
+    textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 3
   }
 };

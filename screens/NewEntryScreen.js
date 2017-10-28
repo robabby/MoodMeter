@@ -17,10 +17,7 @@ import { setCurrentMood } from '../actions';
 
 class NewEntryScreen extends Component {
   static navigationOptions = (props) => ({
-    title: 'Home',
-    tabBarIcon: ({ tintColor }) => {
-        return <Icon name="home" size={30} color={tintColor} />
-    }
+    title: 'New Entry'
   })
 
   state = {
@@ -165,7 +162,7 @@ const styles = {
   },
   moodBadgeTextStyle: {
     textShadowColor: 'rgba(0, 0, 0, .5)',
-    textShadowOffset: {width: 1, height: 1},
+    textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 3
   }
 }
