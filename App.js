@@ -29,8 +29,6 @@ export default class App extends React.Component {
     });
   }
   render() {
-
-
     const initialFlow = StackNavigator({
       home: { screen: HomeScreen },
       new: { screen: NewEntryScreen }
