@@ -16,8 +16,15 @@ import { MapView, Contacts } from 'expo';
 import { setCurrentMood } from '../actions';
 
 class NewEntryScreen extends Component {
-  static navigationOptions = (props) => ({
-    title: 'New Entry'
+  static navigationOptions = ({ navigation, screenprops }) => ({
+    title: 'New Entry',
+    headerLeft: (
+      <Icon
+        name="chevron-left"
+        onPress={() => navigation.navigate('home')}
+        color="rgba(0, 122, 255, 1)"
+      />
+    )
   })
 
   state = {

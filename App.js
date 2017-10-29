@@ -43,9 +43,15 @@ export default class App extends React.Component {
       auth: { screen: AuthScreen },
       main: {
         screen: DrawerNavigator({
-          home: { screen: initialFlow },
+          home: { screen: HomeScreen },
           map: { screen: MapScreen },
           deck: { screen: DeckScreen },
+          new: {
+            screen: StackNavigator({
+              new: { screen: NewEntryScreen },
+              addPeople: { screen: SettingsScreen }
+            })
+          },
           review: {
             screen: StackNavigator({
               review: { screen: ReviewScreen },
@@ -53,7 +59,6 @@ export default class App extends React.Component {
             })
           }
         }, {
-          tabBarPosition: 'bottom',
           // swipeEnabled: false  // Android specific functionality we could turn off
           tabBarOptions: {
             labelStyle: { fontSize: 12 }
