@@ -58,32 +58,8 @@ class NewEntryScreen extends Component {
     this.setState({ mapLoaded: true });
   }
 
-  onGoBack = () => {
-    this.props.navigation.navigate('home');
-  }
-
   onRegionChangeComplete = (region) => {
     this.setState({ region });
-  }
-
-  showFirstContactAsync = async () => {
-    // Ask for permission to query contacts.
-    const permission = await Expo.Permissions.askAsync(Expo.Permissions.CONTACTS);
-    if (permission.status !== 'granted') {
-      // Permission was denied...
-      return;
-    }
-    const contacts = await Expo.Contacts.getContactsAsync({
-      fields: [
-        Expo.Contacts.PHONE_NUMBERS,
-        Expo.Contacts.EMAILS,
-      ],
-      pageSize: 10,
-      pageOffset: 0,
-    });
-    if (contacts.total > 0) {
-      console.log(contacts);
-    }
   }
 
   onNotesInput = (text) => {
@@ -91,9 +67,12 @@ class NewEntryScreen extends Component {
     console.log(this.state);
   }
 
+  onAddPeople = () => {
+    this.props.navigation.navigate('addPeople');
+  }
+
   render() {
     const { currentMood } = this.props;
-    const { goBack } = this.props.navigation;
 
     if (!this.state.mapLoaded) {
       return (
@@ -122,7 +101,7 @@ class NewEntryScreen extends Component {
           <ListItem
             title="Add People"
             leftIcon={{name: 'face'}}
-            onPress={this.showFirstContactAsync}
+            onPress={this.onAddPeople}
           />
           <ListItem
             title="Add Photos"
