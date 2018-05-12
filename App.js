@@ -11,6 +11,7 @@ import AuthScreen from './screens/AuthScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
 import HomeScreen from './screens/HomeScreen';
 import NewEntryScreen from  './screens/NewEntryScreen';
+import AddPeopleScreen from  './screens/AddPeopleScreen';
 import MapScreen from './screens/MapScreen';
 import DeckScreen from './screens/DeckScreen';
 import SettingsScreen from './screens/SettingsScreen';
@@ -49,7 +50,7 @@ export default class App extends React.Component {
           new: {
             screen: StackNavigator({
               new: { screen: NewEntryScreen },
-              addPeople: { screen: SettingsScreen }
+              addPeople: { screen: AddPeopleScreen }
             })
           },
           review: {
