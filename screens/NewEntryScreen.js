@@ -4,25 +4,26 @@ import {
   Button,
   FormLabel,
   FormInput,
-  Icon,
   Divider,
   Badge,
-  List,
-  ListItem
 } from 'react-native-elements';
+import { Icon, List } from '@ant-design/react-native';
 import { connect } from 'react-redux';
 import { MapView, Contacts } from 'expo';
 
 import { setCurrentMood } from '../actions';
+
+const ListItem = List.Item;
+const Brief = ListItem.Brief;
 
 class NewEntryScreen extends Component {
   static navigationOptions = ({ navigation, screenprops }) => ({
     title: 'New Entry',
     headerLeft: (
       <Icon
-        name="chevron-left"
-        onPress={() => navigation.navigate('home')}
-        color="rgba(0, 122, 255, 1)"
+        name="left"
+        onPress={() => navigation.navigate('Home')}
+        color="rgba(0, 0, 0, 1)"
       />
     )
   })
@@ -99,18 +100,21 @@ class NewEntryScreen extends Component {
 
         <List containerStyle={{marginBottom: 20}}>
           <ListItem
-            title="Add People"
-            leftIcon={{name: 'face'}}
+            arrow="horizontal"
             onPress={this.onAddPeople}
-          />
+          >
+            Add People
+          </ListItem>
           <ListItem
-            title="Add Photos"
-            leftIcon={{name: 'add-a-photo'}}
-          />
+            arrow="horizontal"
+          >
+            Add Photos
+          </ListItem>
           <ListItem
-            title="Add Links"
-            leftIcon={{name: 'attachment'}}
-          />
+            arrow="horizontal"
+          >
+            Add Links
+          </ListItem>
         </List>
 
         <FormLabel>Notes</FormLabel>
@@ -123,7 +127,6 @@ class NewEntryScreen extends Component {
 
         <Button
           title="Save"
-          icon={{name: 'done'}}
           backgroundColor='#00D2FF'
           style={styles.contactButtonStyles}
           raised={true}

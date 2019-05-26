@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView, Linking, Platform } from 'react-native';
-import { Button, Card, Icon } from 'react-native-elements';
+import { Button, Card } from 'react-native-elements';
+import { Icon } from '@ant-design/react-native';
 import { connect } from 'react-redux';
 import { MapView } from 'expo';
 
@@ -13,7 +14,7 @@ class ReviewScreen extends Component {
     headerRight: (
       <Button
         title="Settings"
-        onPress={() => navigation.navigate('settings')}
+        onPress={() => navigation.navigate('Settings')}
         backgroundColor="rgba(0, 0, 0, 0)"
         color="rgba(0, 122, 255, 1)"
       />

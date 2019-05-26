@@ -22,6 +22,78 @@ import DeckScreen from './screens/DeckScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import ReviewScreen from  './screens/ReviewScreen';
 
+const InitialStack = createStackNavigator({
+  Home: { screen: HomeScreen },
+  New: { screen: NewEntryScreen }
+}, {
+  initialRouteName: 'Home',
+  headerMode: 'none'
+});
+
+const AuthStack = createStackNavigator({ 
+  Welcome: WelcomeScreen,
+  Auth: AuthScreen
+}, {
+  initialRouteName: 'Welcome',
+  headerMode: 'none'
+});
+
+const AppNavigator = createBottomTabNavigator({
+  App: {
+    screen: createDrawerNavigator({
+      Home: {
+        screen: HomeScreen,
+      },
+      Map: {
+        screen: MapScreen,
+      },
+      Deck: {
+        screen: DeckScreen
+      },
+      New: {
+        screen: createStackNavigator({
+          New: {
+            screen: NewEntryScreen
+          },
+          AddPeople: {
+            screen: AddPeopleScreen
+          }
+        })
+      },
+      Review: {
+        screen: createStackNavigator({
+          Review: {
+            screen: ReviewScreen
+          },
+          Settings: {
+            screen: SettingsScreen
+          }
+        })
+      }
+    }, {
+      // swipeEnabled: false  // Android specific functionality we could turn off
+      tabBarOptions: {
+        labelStyle: { fontSize: 12 }
+      }
+    })
+  }
+}, {
+  defaultNavigationOptions: {
+    tabBarVisible: false
+  },
+  lazy: true
+});
+
+const AppContainer = createAppContainer(createSwitchNavigator(
+  {
+    App: AppNavigator,
+    Auth: AuthStack,
+  },
+  {
+    initialRouteName: 'Auth',
+  }
+));
+
 class App extends React.Component {
   state = {
     isReady: false,
@@ -54,78 +126,10 @@ class App extends React.Component {
   }
   render() {
     const { isReady } = this.state;
-    // const initialFlow = createStackNavigator({
-    //   home: { screen: HomeScreen },
-    //   new: { screen: NewEntryScreen }
-    // }, {
-    //   initialRouteName: 'home',
-    //   headerMode: 'none'
-    // });
 
     if (!isReady) {
       return <AppLoading />;
     }
-
-    const AuthStack = createStackNavigator({ 
-      Auth: AuthScreen,
-    });
-
-    const AppNavigator = createBottomTabNavigator({
-      App: {
-        screen: createDrawerNavigator({
-          Home: {
-            screen: HomeScreen,
-          },
-          Map: {
-            screen: MapScreen,
-          },
-          Deck: {
-            screen: DeckScreen
-          },
-          New: {
-            screen: createStackNavigator({
-              New: {
-                screen: NewEntryScreen
-              },
-              AddPeople: {
-                screen: AddPeopleScreen
-              }
-            })
-          },
-          Review: {
-            screen: createStackNavigator({
-              Review: {
-                screen: ReviewScreen
-              },
-              Settings: {
-                screen: SettingsScreen
-              }
-            })
-          }
-        }, {
-          // swipeEnabled: false  // Android specific functionality we could turn off
-          tabBarOptions: {
-            labelStyle: { fontSize: 12 }
-          }
-        })
-      }
-    }, {
-      defaultNavigationOptions: {
-        tabBarVisible: false
-      },
-      lazy: true
-    });
-
-    const AppContainer = createAppContainer(createSwitchNavigator(
-      {
-        Welcome: WelcomeScreen,
-        App: AppNavigator,
-        Auth: AuthStack,
-      },
-      {
-        initialRouteName: 'Welcome',
-      }
-    ));
 
     return (
       // Every component now has access to the store using the

@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import {
   View,
-  Text,
-  Platform,
-  Slider,
+  AsyncStorage,
   Dimensions
 } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
@@ -56,13 +54,20 @@ class HomeScreen extends Component {
     }
   }
 
-  componentDidMount() {
-    console.log(this.props);
+  async componentWillMount() {
+    // await AsyncStorage.removeItem('fb_token');
+    // await AsyncStorage.clear();
+    let token = await AsyncStorage.getItem('fb_token');
+
+    console.log(token)
+
+    if (!token) {
+      this.props.navigation.navigate('Welcome');
+    }
   }
 
   onSelectMood = (mood) => {
     this.props.setCurrentMood(mood);
-    console.log("/onSelectMood/ ", this.props);
     this.props.navigation.navigate('New');
   }
 

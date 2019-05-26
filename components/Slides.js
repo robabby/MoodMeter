@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView, Dimensions } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, WhiteSpace, WingBlank } from '@ant-design/react-native';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -9,11 +9,12 @@ class Slides extends Component {
     if (index === this.props.data.length - 1) {
       return (
         <Button
-          title="Let's Start"
-          raised
-          buttonStyle={styles.buttonStyle}
+          size="large"
+          style={styles.buttonStyle}
           onPress={this.props.onComplete}
-        />
+        >
+          Let's Start
+        </Button>
       )
     }
   }
@@ -59,7 +60,6 @@ const styles = {
     color: 'white'
   },
   buttonStyle: {
-    backgroundColor: '#0288d1',
     marginTop: 15
   }
 };
