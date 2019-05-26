@@ -1,8 +1,13 @@
-import { Notifications } from 'expo';
+import { AppLoading, Font, Notifications } from 'expo';
 import React from 'react';
 import { StyleSheet, Text, View, Alert } from 'react-native';
-import { TabNavigator, StackNavigator, DrawerNavigator } from 'react-navigation';
-// Provider is the root tag then hosts the state for the entire application
+import { 
+  createStackNavigator, 
+  createDrawerNavigator, 
+  createBottomTabNavigator, 
+  createAppContainer,
+  createSwitchNavigator 
+} from 'react-navigation';
 import { Provider } from 'react-redux';
 
 import registerForNotifications from './services/push_notifications';
@@ -17,8 +22,26 @@ import DeckScreen from './screens/DeckScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import ReviewScreen from  './screens/ReviewScreen';
 
-export default class App extends React.Component {
-  componentDidMount() {
+class App extends React.Component {
+  state = {
+    isReady: false,
+  };
+
+  async componentDidMount() {
+    await Font.loadAsync(
+      'antoutline',
+      // eslint-disable-next-line
+      require('@ant-design/icons-react-native/fonts/antoutline.ttf')
+    );
+
+    await Font.loadAsync(
+      'antfill',
+      // eslint-disable-next-line
+      require('@ant-design/icons-react-native/fonts/antfill.ttf')
+    );
+    // eslint-disable-next-line
+    this.setState({ isReady: true });
+
     registerForNotifications();
     Notifications.addListener((notification) => {
       const { data: { text }, origin } = notification
@@ -30,33 +53,53 @@ export default class App extends React.Component {
     });
   }
   render() {
-    const initialFlow = StackNavigator({
-      home: { screen: HomeScreen },
-      new: { screen: NewEntryScreen }
-    }, {
-      initialRouteName: 'home',
-      headerMode: 'none'
+    const { isReady } = this.state;
+    // const initialFlow = createStackNavigator({
+    //   home: { screen: HomeScreen },
+    //   new: { screen: NewEntryScreen }
+    // }, {
+    //   initialRouteName: 'home',
+    //   headerMode: 'none'
+    // });
+
+    if (!isReady) {
+      return <AppLoading />;
+    }
+
+    const AuthStack = createStackNavigator({ 
+      Auth: AuthScreen,
     });
 
-    const MainNavigator = TabNavigator({
-      // Route config object
-      welcome: { screen: WelcomeScreen },
-      auth: { screen: AuthScreen },
-      main: {
-        screen: DrawerNavigator({
-          home: { screen: HomeScreen },
-          map: { screen: MapScreen },
-          deck: { screen: DeckScreen },
-          new: {
-            screen: StackNavigator({
-              new: { screen: NewEntryScreen },
-              addPeople: { screen: AddPeopleScreen }
+    const AppNavigator = createBottomTabNavigator({
+      App: {
+        screen: createDrawerNavigator({
+          Home: {
+            screen: HomeScreen,
+          },
+          Map: {
+            screen: MapScreen,
+          },
+          Deck: {
+            screen: DeckScreen
+          },
+          New: {
+            screen: createStackNavigator({
+              New: {
+                screen: NewEntryScreen
+              },
+              AddPeople: {
+                screen: AddPeopleScreen
+              }
             })
           },
-          review: {
-            screen: StackNavigator({
-              review: { screen: ReviewScreen },
-              settings: { screen: SettingsScreen }
+          Review: {
+            screen: createStackNavigator({
+              Review: {
+                screen: ReviewScreen
+              },
+              Settings: {
+                screen: SettingsScreen
+              }
             })
           }
         }, {
@@ -67,18 +110,28 @@ export default class App extends React.Component {
         })
       }
     }, {
-      // Config options for initial Navigator
-      navigationOptions: {
+      defaultNavigationOptions: {
         tabBarVisible: false
       },
       lazy: true
     });
 
+    const AppContainer = createAppContainer(createSwitchNavigator(
+      {
+        Welcome: WelcomeScreen,
+        App: AppNavigator,
+        Auth: AuthStack,
+      },
+      {
+        initialRouteName: 'Welcome',
+      }
+    ));
+
     return (
       // Every component now has access to the store using the
       // Connect helper from react-redux library
       <Provider store={store}>
-        <MainNavigator />
+        <AppContainer />
       </Provider>
     );
   }
@@ -92,3 +145,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export default App;

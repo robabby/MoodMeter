@@ -63,7 +63,7 @@ class HomeScreen extends Component {
   onSelectMood = (mood) => {
     this.props.setCurrentMood(mood);
     console.log("/onSelectMood/ ", this.props);
-    this.props.navigation.navigate('new');
+    this.props.navigation.navigate('New');
   }
 
   render() {

@@ -35,7 +35,7 @@ class MapScreen extends Component {
   onButtonPress = () => {
     // You get access to action creators through the props of your component
     this.props.fetchJobs(this.state.region, () => {
-      this.props.navigation.navigate('deck');
+      this.props.navigation.navigate('Deck');
     });
   }
 

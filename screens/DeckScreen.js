@@ -54,7 +54,7 @@ class DeckScreen extends Component {
           large
           icon={{ name: 'my-location' }}
           backgroundColor="#03A9F4"
-          onPress={() => this.props.navigation.navigate('map')}
+          onPress={() => this.props.navigation.navigate('Map')}
         />
       </Card>
     )

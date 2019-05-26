@@ -68,7 +68,7 @@ class NewEntryScreen extends Component {
   }
 
   onAddPeople = () => {
-    this.props.navigation.navigate('addPeople');
+    this.props.navigation.navigate('AddPeople');
   }
 
   render() {

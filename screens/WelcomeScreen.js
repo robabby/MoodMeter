@@ -18,14 +18,14 @@ class WelcomeScreen extends Component {
 
     if (token) {
       this.setState({ token });
-      this.props.navigation.navigate('home');
+      this.props.navigation.navigate('Home');
     } else {
       this.setState({ token: false });
     }
   }
 
   onSlidesComplete = () => {
-    this.props.navigation.navigate('auth');
+    this.props.navigation.navigate('Auth');
   }
 
   render() {

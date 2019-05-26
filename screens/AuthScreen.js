@@ -7,7 +7,7 @@ class AuthScreen extends Component {
   componentDidMount() {
     this.props.facebookLogin();
     this.onAuthComplete(this.props);
-    // AsyncStorage.removeItem('fb_token');
+    AsyncStorage.removeItem('fb_token');
   }
 
   // Captures the case when someone successfully logs into the application
@@ -17,7 +17,7 @@ class AuthScreen extends Component {
 
   onAuthComplete(props) {
     if (props.token) {
-      this.props.navigation.navigate('home');
+      this.props.navigation.navigate('Home');
     }
   }
 
