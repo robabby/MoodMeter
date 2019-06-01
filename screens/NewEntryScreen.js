@@ -29,6 +29,7 @@ class NewEntryScreen extends Component {
   })
 
   state = {
+    selectedMood: null,
     mapLoaded: false,
     notes: null,
     region: {

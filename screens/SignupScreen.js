@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { AsyncStorage, StyleSheet,  ScrollView } from "react-native";
-import { Button, InputItem, List, WingBlank } from "@ant-design/react-native";
-import { login } from "../lib/auth";
-import { connect } from "react-redux";
-import * as actions from "../actions";
+import React, { Component } from 'react';
+import { View, Text, AsyncStorage } from 'react-native';
+import { Button, InputItem, List, WingBlank } from '@ant-design/react-native';
+import { strapiRegister } from "../lib/auth";
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 
 class AuthScreen extends Component {
   state = {
@@ -19,7 +19,7 @@ class AuthScreen extends Component {
 
   _bootstrapAsync = async () => {
     // await AsyncStorage.clear();
-    // await AsyncStorage.removeItem("token");
+    // await AsyncStorage.removeItem('fb_token');
     const userToken = await AsyncStorage.getItem("token");
 
     // This will switch to the App screen or Auth screen and this loading
@@ -27,40 +27,56 @@ class AuthScreen extends Component {
     this.props.navigation.navigate(userToken ? 'App' : 'Auth');
   };
 
-  handleLogin = async () => {
-    const { username, password } = this.state;
-    await login(username, password).then(async data => {
-      const token = await AsyncStorage.getItem("token");
-
-      if (token) {
-        this.onAuthComplete();
-      }
-    })
+  // Captures the case when someone successfully logs into the application
+  componentWillReceiveProps(nextProps) {
+    this.onAuthComplete(nextProps);
   }
 
-  onAuthComplete() {
-    this.props.navigation.navigate('Home');
+  handleFacebookLogin = () => {
+    this.props.facebookLogin();
+    this.onAuthComplete(this.props);
+  }
+
+  handleSignup = () => {
+    const { username, email, password } = this.state;
+    strapiRegister(username, email, password)
+  }
+
+  onAuthComplete(props) {
+    if (props.token) {
+      this.props.navigation.navigate('Home');
+    }
   }
 
   render() {
     return (
-      <ScrollView 
-        contentContainerStyle={styles.container}
-        keyboardShouldPersistTaps="never"
-      >
-        <List style={{ marginTop: 15, width: "100%" }}>
+      <View>
+        <List style={{ marginTop: 15 }}>
           <InputItem
             clear
+            error
             onChange={username => {
               this.setState({
                 username,
               });
             }}
-            placeholder="Username or Email"
+            placeholder="Username"
             value={this.state.username}
           />
           <InputItem
             clear
+            error
+            onChange={email => {
+              this.setState({
+                email,
+              });
+            }}
+            placeholder="Email"
+            value={this.state.email}
+          />
+          <InputItem
+            clear
+            error
             onChange={password => {
               this.setState({
                 password,
@@ -72,12 +88,12 @@ class AuthScreen extends Component {
           />
           <WingBlank size="md">
             <Button
-              onPress={this.handleLogin}
+              onPress={this.handleSignup}
               size="large"
               style={{ marginTop: 15 }}
               type="primary"
             >
-              Login
+              Sign Up
             </Button>
           </WingBlank>
           <WingBlank size="md">
@@ -91,19 +107,10 @@ class AuthScreen extends Component {
             </Button>
           </WingBlank>
         </List>
-      </ScrollView>
+      </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-});
 
 function mapStateToProps({ auth }) {
   return { token: auth.token };

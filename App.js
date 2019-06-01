@@ -1,6 +1,7 @@
+import { API_URL } from "react-native-dotenv";
 import { AppLoading, Font, Notifications } from 'expo';
 import React from 'react';
-import { StyleSheet, Text, View, Alert } from 'react-native';
+import { Alert, Text, View } from 'react-native';
 import { 
   createStackNavigator, 
   createDrawerNavigator, 
@@ -9,8 +10,13 @@ import {
   createSwitchNavigator 
 } from 'react-navigation';
 import { Provider } from 'react-redux';
+import { Provider as GraphQLProvider, createClient } from 'urql';
 
-import registerForNotifications from './services/push_notifications';
+const client = createClient({
+  url: `${API_URL}/graphql`
+})
+
+// import registerForNotifications from './services/push_notifications';
 import store from './store';
 import AuthScreen from './screens/AuthScreen';
 import WelcomeScreen from './screens/WelcomeScreen';
@@ -34,7 +40,7 @@ const AuthStack = createStackNavigator({
   Welcome: WelcomeScreen,
   Auth: AuthScreen
 }, {
-  initialRouteName: 'Welcome',
+  initialRouteName: 'Auth',
   headerMode: 'none'
 });
 
@@ -114,7 +120,7 @@ class App extends React.Component {
     // eslint-disable-next-line
     this.setState({ isReady: true });
 
-    registerForNotifications();
+    // registerForNotifications();
     Notifications.addListener((notification) => {
       const { data: { text }, origin } = notification
       Alert.alert(
@@ -134,20 +140,13 @@ class App extends React.Component {
     return (
       // Every component now has access to the store using the
       // Connect helper from react-redux library
-      <Provider store={store}>
-        <AppContainer />
-      </Provider>
+      <GraphQLProvider value={client}>
+        <Provider store={store}>
+          <AppContainer />
+        </Provider>
+      </GraphQLProvider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 export default App;

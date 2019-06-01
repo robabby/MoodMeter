@@ -54,21 +54,19 @@ class HomeScreen extends Component {
     }
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     // await AsyncStorage.removeItem('fb_token');
     // await AsyncStorage.clear();
-    let token = await AsyncStorage.getItem('fb_token');
-
-    console.log(token)
+    let token = await AsyncStorage.getItem("token");
 
     if (!token) {
-      this.props.navigation.navigate('Welcome');
+      this.props.navigation.navigate("Welcome");
     }
   }
 
   onSelectMood = (mood) => {
     this.props.setCurrentMood(mood);
-    this.props.navigation.navigate('New');
+    this.props.navigation.navigate("New");
   }
 
   render() {
