@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import { View, Text, AsyncStorage } from 'react-native';
+import { Button, InputItem, List, WingBlank } from '@ant-design/react-native';
+import { strapiRegister } from "../lib/auth";
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
 class AuthScreen extends Component {
+  state = {
+    email: '',
+    password: '',
+    username: ''
+  };
+
   constructor(props) {
     super(props);
     this._bootstrapAsync();
@@ -21,14 +29,19 @@ class AuthScreen extends Component {
     this.props.navigation.navigate(userToken ? 'App' : 'Auth');
   };
 
-  componentDidMount() {
+  // Captures the case when someone successfully logs into the application
+  componentWillReceiveProps(nextProps) {
+    this.onAuthComplete(nextProps);
+  }
+
+  handleFacebookLogin = () => {
     this.props.facebookLogin();
     this.onAuthComplete(this.props);
   }
 
-  // Captures the case when someone successfully logs into the application
-  componentWillReceiveProps(nextProps) {
-    this.onAuthComplete(nextProps);
+  handleSignup = () => {
+    const { username, email, password } = this.state;
+    strapiRegister(username, email, password)
   }
 
   onAuthComplete(props) {
@@ -39,7 +52,64 @@ class AuthScreen extends Component {
 
   render() {
     return (
-      <View />
+      <View>
+        <List style={{ marginTop: 15 }}>
+          <InputItem
+            clear
+            error
+            onChange={username => {
+              this.setState({
+                username,
+              });
+            }}
+            placeholder="Username"
+            value={this.state.username}
+          />
+          <InputItem
+            clear
+            error
+            onChange={email => {
+              this.setState({
+                email,
+              });
+            }}
+            placeholder="Email"
+            value={this.state.email}
+          />
+          <InputItem
+            clear
+            error
+            onChange={password => {
+              this.setState({
+                password,
+              });
+            }}
+            placeholder="Password"
+            type="password"
+            value={this.state.password}
+          />
+          <WingBlank size="md">
+            <Button
+              onPress={this.handleSignup}
+              size="large"
+              style={{ marginTop: 15 }}
+              type="primary"
+            >
+              Sign Up
+            </Button>
+          </WingBlank>
+          <WingBlank size="md">
+            <Button
+              onPress={this.handleFacebookLogin}
+              size="large"
+              style={{ marginTop: 15 }}
+              type="primary"
+            >
+              Facebook
+            </Button>
+          </WingBlank>
+        </List>
+      </View>
     );
   }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView, Dimensions } from 'react-native';
-import { Button, WhiteSpace, WingBlank } from '@ant-design/react-native';
+import { Button, WhiteSpace } from '@ant-design/react-native';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
